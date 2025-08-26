@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Travel Picker</title>
+  <style>
+    :root{
+      --bg: #f7fafc;
+      --card: #ffffff;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --brand: #2563eb;
+      --brand-2: #60a5fa;
+      --border: #e5e7eb;
+      --radius: 16px;
+      --shadow: 0 10px 25px rgba(0,0,0,0.06);
+    }
+
+    *{ box-sizing: border-box; }
+
+    html, body{
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+      color: var(--text);
+      background: linear-gradient(140deg, #eef2ff, #ecfeff 40%, #fef9c3);
+      min-height: 100%;
+    }
+
+    .site-header{
+      text-align: center;
+      padding: 48px 16px 24px;
+    }
+
+    .site-header h1{
+      margin: 0 0 8px;
+      font-size: 2.2rem;
+    }
+
+    .site-header p{
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .container{
+      width: min(1000px, 92vw);
+      margin: 0 auto 48px;
+      display: grid;
+      gap: 20px;
+      grid-template-columns: 1fr;
+    }
+
+    @media (min-width: 900px){
+      .container{ grid-template-columns: 1.2fr 1fr; }
+    }
+
+    .card{
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      box-shadow: var(--shadow);
+    }
+
+    .card h2{
+      margin-top: 0;
+      font-size: 1.25rem;
+    }
+
+    .grid-form{
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .field{
+      display: grid;
+      gap: 8px;
+    }
+
+    .field--full{
+      grid-column: 1 / -1;
+    }
+
+    label, legend{
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    input[type="text"],
+    input[type="date"],
+    input[type="number"],
+    select{
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      outline: none;
+      background: #fff;
+    }
+
+    input[type="range"]{
+      width: 100%;
+    }
+
+    .range-hint{
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-top: -6px;
+    }
+
+    fieldset{
+      border: 1px dashed var(--border);
+      padding: 12px;
+      border-radius: 12px;
+    }
+
+    fieldset label{
+      margin-right: 12px;
+      font-weight: 500;
+    }
+
+    .actions{
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 8px;
+    }
+
+    button{
+      padding: 12px 16px;
+      border: 0;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--brand), var(--brand-2));
+      color: white;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform .06s ease, filter .2s ease;
+      box-shadow: 0 8px 18px rgba(37, 99, 235, .25);
+    }
+
+    button:hover{ filter: brightness(1.05); }
+    button:active{ transform: translateY(1px); }
+
+    .results .muted{
+      color: var(--muted);
+      margin: 6px 0 0;
+      font-size: 0.95rem;
+    }
+
+    .site-footer{
+      text-align: center;
+      color: var(--muted);
+      padding: 24px 16px 40px;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <h1>Travel Picker</h1>
+    <p>Pick your route, dates, and vibe — we’ll suggest a trip idea. salomi.</p>
+  </header>
+
+  <main class="container">
+    <section class="card">
+      <h2>Plan your trip</h2>
+
+      <form class="grid-form" id="tripForm">
+        <!-- Route -->
+        <div class="field">
+          <label for="from">From</label>
+          <select id="from" name="from" required>
+            <option value="" selected disabled>Select city</option>
+            <option>Mumbai</option>
+            <option>Delhi</option>
+            <option>Bengaluru</option>
+            <option>Ahmedabad</option>
+            <option>Chennai</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="to">To</label>
+          <select id="to" name="to" required>
+            <option value="" selected disabled>Select city</option>
+            <option>Goa</option>
+            <option>Jaipur</option>
+            <option>Kerala</option>
+            <option>Manali</option>
+            <option>Andaman</option>
+          </select>
+        </div>
+
+        <!-- Dates -->
+        <div class="field">
+          <label for="depart">Depart</label>
+          <input id="depart" name="depart" type="date" required />
+        </div>
+
+        <div class="field">
+          <label for="return">Return</label>
+          <input id="return" name="return" type="date" />
+        </div>
+
+        <!-- Travellers -->
+        <div class="field">
+          <label for="travellers">Travellers</label>
+          <input id="travellers" name="travellers" type="number" min="1" value="1" />
+        </div>
+
+        <!-- Budget -->
+        <div class="field">
+          <label for="budget">Budget (₹)</label>
+          <input id="budget" name="budget" type="range" min="5000" max="200000" value="50000" />
+          <div class="range-hint">
+            <span>₹5k</span><span>₹200k</span>
+          </div>
+        </div>
+
+        <!-- Interests -->
+        <fieldset class="field field--full">
+          <legend>Interests</legend>
+          <label><input type="checkbox" name="interest" value="beach" /> Beach</label>
+          <label><input type="checkbox" name="interest" value="mountains" /> Mountains</label>
+          <label><input type="checkbox" name="interest" value="city" /> City</label>
+          <label><input type="checkbox" name="interest" value="food" /> Food</label>
+          <label><input type="checkbox" name="interest" value="heritage" /> Heritage</label>
+        </fieldset>
+
+        <!-- CTA -->
+        <div class="actions field--full">
+          <button type="submit">Find Trips</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="card results" id="results">
+      <h2>Suggested trips</h2>
+      <p class="muted">Submit the form to see suggestions here.</p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <small>© 2025 Travel Picker • Demo UI (no backend)</small>
+  </footer>
+
+  <!-- JS -->
+  <script>
+    document.getElementById("tripForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      // Collect form data
+      const from = document.getElementById("from").value;
+      const to = document.getElementById("to").value;
+      const depart = document.getElementById("depart").value;
+      const ret = document.getElementById("return").value || "Flexible";
+      const travellers = document.getElementById("travellers").value;
+      const budget = document.getElementById("budget").value;
+
+      const interests = Array.from(document.querySelectorAll("input[name='interest']:checked"))
+        .map(cb => cb.value);
+
+      // Generate suggestion
+      let suggestion = `
+        <p><strong>Route:</strong> ${from} → ${to}</p>
+        <p><strong>Dates:</strong> ${depart} - ${ret}</p>
+        <p><strong>Travellers:</strong> ${travellers}</p>
+        <p><strong>Budget:</strong> Around ₹${budget}</p>
+        <p><strong>Interests:</strong> ${interests.length ? interests.join(", ") : "Any"}</p>
+        <hr>
+      `;
+
+      // Travel ideas
+      const ideas = {
+        Goa: "Chill on the beaches, try water sports, and enjoy nightlife.",
+        Jaipur: "Explore forts, palaces, and heritage walks.",
+        Kerala: "Go for backwater houseboats, ayurvedic spas, and beaches.",
+        Manali: "Perfect for trekking, snow, and mountain adventures.",
+        Andaman: "Snorkeling, scuba diving, and pristine beaches."
+      };
+
+      suggestion += `<p><strong>Our Tip:</strong> ${ideas[to] || "Explore freely, lots to see!"}</p>`;
+
+      // Show result
+      const results = document.getElementById("results");
+      results.innerHTML = `<h2>Suggested trips</h2>${suggestion}`;
+    });
+  </script>
+</body>
+</html>
+
