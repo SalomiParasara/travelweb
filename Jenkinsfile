@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/SalomiParasara/travel--picker.git' 
+                git branch: 'main', url: 'https://github.com/SalomiParasara/travelweb.git' 
             }
         }
 
@@ -36,4 +36,4 @@ pipeline {
         }
     }
 }
-}
+
